@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Translation{% endblock %}
+{% block content %}
+<body style="background-image:url('https://www.fodors.com/wp-content/uploads/2019/07/woman-relaxing-on-deck-large-photo.jpg'); background-size:cover; background-repeat:no-repeat">
+<div style="margin:30px; padding:20px; background:rgba(255,255,255,0.8); height:100%">
+
+  <h3>Translate</h3>
+  <p>Need to translate some words? Use our translation service. Simply provide
+    the words/phrases you would like to translate as well as the language you
+    would like to translate them to in the boxes below.</p>
+
+  <form action="{% url 'translation' %}" method="post">
+      {% csrf_token %}
+
+      <label for="og_text">Text:</label><br>
+      <input type="text" name="og_text" size="100">
+      <br><label for="target_lang">Language:</label><br>
+      <input type="text" name="target_lang" size="100">
+      <br><input href="{% url 'translation' %}" type="submit">
+
+  </form>
+
+  {% if translation %}
+    <br><p>Detected Language:</p><p>{{og_lang}}</p>
+    <br><p>Translation to {{target_lang}}:</p><p>{{translation}}</p>
+  {% else %}
+    <br><p>{{error_message}}</p>
+  {% endif %}
+
+</body>
+{% endblock %}

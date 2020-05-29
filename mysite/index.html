@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Twitter</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+/* Style the header */
+header {
+  background-color: #666;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 30px;
+  text-align: left;
+  font-size: 35px;
+  color: white;
+}
+
+/* Create two columns/boxes that floats next to each other */
+nav {
+  float: left;
+  width: 100%;
+  background: lightgrey;
+  padding: 20px;
+}
+
+/* Style the list inside the menu */
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Clear floats after the columns */
+section:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+}
+</style>
+</head>
+
+<body onload="document.getElementById('defaultOpen').click();">
+<header>
+  <h2>Twitter</h2>
+</header>
+
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'Home')" id="defaultOpen">Home</button>
+  <!--<button class="tablinks" onclick="openTab(event, 'Home')">Home</button>-->
+  <button class="tablinks" onclick="openTab(event, 'User')">User</button>
+</div>
+
+<div id="Home" class="tabcontent">
+  <section>
+    <nav>
+      <ul>
+        <h3>Tweets</h3>
+        {% load static %}
+
+        <link rel="stylesheet" type="text/css" href="{% static 'twit/style.css' %}">
+
+        {% if latest_tweet_list %} <!--if there are tweets, display them-->
+            <ul>
+            {% for tweet in latest_tweet_list %}
+                <li><a href="{% url 'twit:detail' tweet.id %}">{{ tweet.tweet_text }}</a></li>
+            {% endfor %}
+            </ul>
+        {% else %} <!--if there are no tweets-->
+            <p>No tweets are available.</p>
+        {% endif %}
+      </ul>
+    </nav>
+  </section>
+</div>
+
+<div id="User" class="tabcontent">
+  <h3>User</h3>
+</div>
+
+<script>
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+document.getElementById("defaultOpen").click();
+</script>
+</body>
+</html>

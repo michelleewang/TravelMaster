@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Detect Landmark{% endblock %}
+{% block content %}
+<body style="background-image:url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-1.2.1&w=1000&q=80'); background-size:cover; background-repeat:no-repeat">
+<div style="margin:30px; padding:20px; background:rgba(255,255,255,0.8); height:100%">
+
+  <h3>Detect Landmark From Images</h3>
+  <p>Have a photo of a with a famous landmark? Use our landmark detection service
+    to scan a photo and detect famous landmarks. After detection, we can also
+    give you information on the landmark(s) in the photo. Enter the image address
+    below of the photo you would like to scan. Please make sure that your url is not encrypted.</p>
+
+  <p>Example Images:</p>
+  <div class="row">
+    <div class="column" style="padding:5px">
+      <img src="https://thumbor.thedailymeal.com/QOuw1z3VzY5p7E4U2vd01ofzLk0=/870x565/https://www.theactivetimes.com/sites/default/files/2020/02/20/00_Hero.jpg" alt="Example1" style="height:200px">
+    </div>
+    <div class="column" style="padding:5px">
+      <img src="https://www.history.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTY1MTc1MTk3ODI0MDAxNjA5/topic-statue-of-liberty-gettyimages-960610006-promo.jpg" alt="Example2" style="height:200px">
+    </div>
+    <div class="column" style="padding:5px">
+      <img src="https://cdn.abcotvs.com/dip/images/3687995_070118-kgo-shutterstock-ggb-img.jpg?w=1600" alt="Example2" style="height:200px">
+    </div>
+  </div>
+
+  <form action="{% url 'detectLandmark' %}" method="post">
+      {% csrf_token %}
+
+      <br><label for="img_url">Image URL:</label><br>
+      <input type="text" name="img_url" size="100"><input href="{% url 'detectLandmark' %}" type="submit">
+
+  </form>
+
+  <br><img src={{img_url}} style="height:300px" class="mx-auto d-block" alt="Image Displays Here.">
+
+  {% if landmarks %}
+    <p>Landmark(s):</p>
+    <ul>
+    {% for landmark in landmarks %}
+    <li>{{landmark}}</li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>No Landmark Detected.</p>
+  {% endif %}
+
+</div>
+
+</body>
+{% endblock %}

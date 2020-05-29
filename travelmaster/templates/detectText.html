@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Detect Text{% endblock %}
+{% block content %}
+<body style="background-image:url('https://www.10wallpaper.com/wallpaper/1600x1200/1901/Ocean_Drive_in_Miami_Florida_2019_Bing_Wallpaper_1600x1200.jpg'); background-size:cover; background-repeat:no-repeat">
+<div style="margin:30px; padding:20px; background:rgba(255,255,255,0.8); height:100%">
+
+  <h3>Detect Text From Images</h3>
+  <p>Have a photo of a sign with some foreign words? Or a picture of a menu in a
+    foreign language? Use our text detection service to scan a photo and detect
+    printed or handwritten words. After detection, we can also help translate the
+    words to a desired language. Enter the image address below of the photo you
+    would like to scan. Please make sure that your url is not encrypted.</p>
+
+  <p>Example Images:</p>
+  <div class="row">
+    <div class="column" style="padding:5px">
+      <img src=https://i.pinimg.com/originals/3c/14/aa/3c14aa0b503b765c0cba58239c3fc866.jpg alt="Example1" style="height:250px">
+    </div>
+    <div class="column" style="padding:5px">
+      <img src=https://i.pinimg.com/474x/06/12/7b/06127bf2ee2cadc8462f3ca033fd4b97.jpg alt="Example2" style="height:250px">
+    </div>
+    <div class="column"style="padding:5px">
+      <img src=https://media-cdn.tripadvisor.com/media/photo-s/19/89/33/01/menu-restaurante-italiano.jpg alt="Example3" style="height:250px">
+    </div>
+  </div>
+
+  <form action="{% url 'detectText' %}" method="post">
+      {% csrf_token %}
+
+      <label for="img_url">Image URL:</label><br>
+      <input type="text" name="img_url" size="100">
+      <input href="{% url 'detectText' %}" type="submit">
+
+  </form>
+
+  <br><img src={{img_url}} style="height:300px" class="mx-auto d-block" alt="Image Displays Here.">
+
+  {% if text %}
+    <p>Scanned Text:</p><p>{{text}}</p>
+    <form action="{% url 'translation' %}" method="post">
+      {% csrf_token %}
+      <label for="img_url">Translate:</label><br>
+      <input type="text" name="target_lang" size="100">
+      <input type="hidden" name="og_text" value="{{text}}">
+      <input href="{% url 'translation' %}" type="submit">
+    </form>
+    {% if translation %}
+      <p>Translation:</p><p>{{translation}}</p>
+    {% endif %}
+  {% else %}
+    <p>No Text Detected.</p>
+  {% endif %}
+
+</div>
+
+</body>
+{% endblock %}

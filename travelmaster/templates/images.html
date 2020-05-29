@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Images{% endblock %}
+{% block content %}
+<body style="background-image:url('https://images.squarespace-cdn.com/content/v1/578aa6abd1758e37cc6aa3a9/1539793937822-WD7LTME74180M8PECU62/ke17ZwdGBToddI8pDm48kCFTy3UGnhJ-fWvK5PBTMNx7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UQAK6Hrx5oK4v7EgPqT2OFRSRLMHaWtK29l-R4I7CH9pArRUwoSl4wuUs73k4k9WwA/MoraineMorning.jpg'); background-size:cover; background-repeat:no-repeat">
+
+<div style="background:rgba(240,240,240,0.9); margin:20px; padding:20px">
+  <h3>Image Analysis</h3>
+  <h6>Use our services below to analyze and detect text, landmarks, and faces
+    from pictures!</h6>
+</div>
+
+<div style="background:rgba(240,240,240,0.9); margin:20px; padding:20px">
+  <h5>Text Detection</h5>
+  <p>Have a photo of a sign with some foreign words? Or a picture of a menu in a
+    foreign language? Use our text detection service to scan a photo and detect
+    printed or handwritten words. After detection, we can also help translate the
+    words to a desired language.</p>
+  <a href="{% url 'detectText' %}" style="color:grey">Click here to use text detection.</a>
+</div>
+
+<div style="background:rgba(240,240,240,0.9); margin:20px; padding:20px">
+  <h5>Landmark Detection</h5>
+  <p>Have a photo of a with a famous landmark? Use our landmark detection service
+    to scan a photo and detect famous landmarks. After detection, we can also
+    give you information on the landmark(s) in the photo.</p>
+  <a href="{% url 'detectLandmark' %}" style="color:grey">Click here to use landmark detection.</a>
+</div>
+
+<div style="background:rgba(240,240,240,0.9); margin:20px; padding:20px">
+  <h5>Face Detection</h5>
+  <p>Have a photo of yourself or some family and friends on vacation? Use our
+    face detection service to analyze the photo and detect your faces and emotions!</p>
+    <a href="{% url 'detectFaces' %}" style="color:grey">Click here to use face detection.</a>
+</div>
+
+</body>
+
+{% endblock %}

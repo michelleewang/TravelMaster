@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Detect Faces{% endblock %}
+{% block content %}
+<body style="background-image:url('https://i1.wp.com/www.leica-camera.blog/wp-content/uploads/Emily-Mandagie.jpg?w=956&h=956&crop=1&ssl=1'); background-size:cover; background-repeat:no-repeat">
+<div style="margin:30px; padding:20px; background:rgba(255,255,255,0.8); height:100%">
+
+  <h3>Detect Faces From Images</h3>
+  <p>Have a photo of yourself or some family and friends on vacation? Use our
+    face detection service to analyze the photo and detect your faces and emotions!
+    Enter the image address below of the photo you would like to scan. Please make
+    sure that your url is not encrypted.</p>
+
+  <p>Example Images:</p>
+  <div class="row">
+    <div class="column" style="padding:5px">
+      <img src=https://img.delicious.com.au/_w1E2wa9/w759-h506-cfill/del/2016/06/happy-countries-make-for-happy-tourists-32634-2.jpg alt="Example1" style="height:200px">
+    </div>
+    <div class="column" style="padding:5px">
+      <img src=https://www.sellmytimesharenow.com/wp-content/uploads/2016/05/Depositphotos_9495773_m-2015.jpg alt="Example2" style="height:200px">
+    </div>
+    <div class="column" style="padding:5px">
+      <img src="https://cmkt-image-prd.freetls.fastly.net/0.1.0/ps/3417637/300/200/m2/fpc/wm0/lomkrjxs6bxv88wlcmfdvbp54ultficf2lb4guyt6wvyslmmordfieujdgx1cvlb-.jpg?1508158153&s=fd2d5c5262ac1548009686506f9078df" alt="Example3" style="height:200px">
+    </div>
+  </div>
+
+  <form action="{% url 'detectFaces' %}" method="post">
+      {% csrf_token %}
+
+      <label for="img_url">Image URL:</label><br>
+      <input type="text" name="img_url" size="100">
+      <input href="{% url 'detectFaces' %}" type="submit">
+
+  </form>
+
+  <br><img src={{img_url}} style="height:300px" class="mx-auto d-block" alt="Image Displays Here.">
+
+  {% if faces %}
+    <p>Number Of Faces Detected: {{numFaces}}</p>
+    <p>Detected Emotions:</p>
+    <ul>
+    {% for face in faces %}
+      {% for emotion in face %}
+        <p>{{emotion}}</p>
+      {% endfor %}
+      <br>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>No Faces Detected.</p>
+  {% endif %}
+
+</div>
+
+</body>
+{% endblock %}
