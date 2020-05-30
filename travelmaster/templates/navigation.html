@@ -2,7 +2,35 @@
 {% block title %}Navigation{% endblock %}
 {% block content %}
 <body style="background-image:url('https://images.unsplash.com/photo-1529905270444-b5e32acc3bdd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80'); background-size:cover; background-repeat:no-repeat">
-<div style="margin:30px; padding:20px; background:rgba(255,255,255,0.8); height:600px">
+<div style="margin:30px; padding:20px; background:rgba(255,255,255,0.8); height:100%">
+
+  <h3>Navigation</h3>
+  <p>Need directions? Use our navigation service to find directions so you can
+    easily get to where you need to go! Enter your current location and your
+    destination below.</p>
+
+  <form action="{% url 'navigation' %}" method="post">
+      {% csrf_token %}
+
+      <label for="og_text">Where are you?</label><br>
+      <input type="text" name="origin" size="100">
+      <br><label for="target_lang">Where do you want to go?</label><br>
+      <input type="text" name="destination" size="100">
+      <br><input href="{% url 'navigation' %}" type="submit">
+
+  </form>
+
+  {% if steps %}
+    <br><p>Directions:</p>
+    <ul>
+    {% for step in steps %}
+    <li>{{step}}</li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <br><p>{{error_message}}</p>
+  {% endif %}
+
 
 </div>
 </body>
